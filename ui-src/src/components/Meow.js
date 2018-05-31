@@ -14,11 +14,23 @@ class Meow extends Component {
     return text.replace(urlRegex, '<a target="_blank" href="$1">$1</a>')
   }
 
+  // replace hashtags with links
+  hashtagify = text => {
+    const hashtagRegex = /\B(#)(\w*[a-zA-Z]+\w*)/g
+    return text.replace(hashtagRegex, '<Link to="/tag/$2" className="hashtag">$&</Link>')
+  }
+
+
   render() {
     if (!this.props.post) {
       return null
     }
-    const { stamp, message, author, hash, userHandle } = this.props.post
+
+    const { stamp, message, author, hash, userHandle } = this.props.post;
+
+    message = this.urlify(message)
+    message = this.hashtagify(message)
+    
     return (
       <div className="meow" id={stamp}>
         <a className="meow-edit" onClick={() => "openEditPost('+id+')"}>
@@ -32,9 +44,8 @@ class Meow extends Component {
           {new Date(stamp).toString()}
         </Link>
         <div className="message">
-          <div dangerouslySetInnerHTML={{ __html: this.urlify(message) }} />
+          <div dangerouslySetInnerHTML={{ __html: message }} />
         </div>
-      </div>
     )
   }
 }
