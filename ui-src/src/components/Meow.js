@@ -28,8 +28,9 @@ class Meow extends Component {
 
     const { stamp, message, author, hash, userHandle } = this.props.post;
 
-    message = this.urlify(message)
-    message = this.hashtagify(message)
+    let formattedMessage = message
+    formattedMessage = this.urlify(message)
+    formattedMessage = this.hashtagify(message)
     
     return (
       <div className="meow" id={stamp}>
@@ -46,6 +47,7 @@ class Meow extends Component {
         <div className="message">
           <div dangerouslySetInnerHTML={{ __html: message }} />
         </div>
+      </div>
     )
   }
 }
