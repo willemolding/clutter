@@ -1,0 +1,37 @@
+{
+  "Tests": [
+    {
+        "Convey":"An image payload can be committed",
+        "Zome": "profilePic",
+        "FnName": "uploadProfilePic",
+        "Input": {"name": "test", "type": "image/png", "data": "12345"},
+        "Output": "%h1%",
+        "Exposure":"public"
+    },
+    {
+        "Convey":"The data can be retrieved for this agent by calling with no params",
+        "Zome": "profilePic",
+        "FnName": "getProfilePic",
+        "Input": {},
+        "Output": {"name": "test", "type": "image/png", "data": "12345"},
+        "Exposure":"public"
+    },
+    {
+        "Convey":"The data can be retrieved for this agent by calling with key hash",
+        "Zome": "profilePic",
+        "FnName": "getProfilePic",
+        "Input": {"agentKeyHash": "%key%"},
+        "Output": {"name": "test", "type": "image/png", "data": "12345"},
+        "Exposure":"public"
+    },
+
+    {
+        "Convey":"A name that is too long will not be allowed to commit",
+        "Zome": "profilePic",
+        "FnName": "uploadProfilePic",
+        "Input": {"name": "testtesttesttesttesttesttesttesttesttest", "type": "image/png", "data": "12345"},
+        "Output": "fail",
+        "Exposure":"public"
+    }
+  ]
+}
