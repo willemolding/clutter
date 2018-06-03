@@ -193,6 +193,40 @@
           "Exposure": "public"
         }
       ]
+    },
+    {
+      "Name": "profilePic",
+      "Description": "zome that implements storing profile pictures for each agent",
+      "RibosomeType": "js",
+      "CodeFile": "profilePic.js",
+      "Config": {
+        "ErrorHandling": "throwErrors"
+      },
+      "Entries": [
+        {
+          "Name": "profilePic",
+          "DataFormat": "json",
+          "SchemaFile": "profilePic.json",
+          "Sharing": "public"
+        },
+        {
+          "Name": "profilePicLinks",
+          "DataFormat": "links",
+          "Sharing": "public"
+        }
+      ],
+      "Functions" : [
+        {
+          "Name": "uploadProfilePic",
+          "CallingType": "json",
+          "Exposure": "public"
+        },
+        {
+          "Name": "getProfilePic",
+          "CallingType": "json",
+          "Exposure": "public"
+        }
+      ]
     }
   ]
 }
