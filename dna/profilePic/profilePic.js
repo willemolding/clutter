@@ -118,8 +118,9 @@ function validateMod(entry_type, entry, header, replaces, pkg, sources) {
 }
 
 function validateDel(entry_type, hash, pkg, sources) {
-  // no deletions
-  return false;
+  return entryType === "profilePic"
+    // Only allow the creator of the entity to delete it.
+    && getCreator(hash) === sources[0];
 }
 
 function validatePutPkg(entry_type) {
