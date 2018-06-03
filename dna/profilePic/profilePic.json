@@ -1,0 +1,16 @@
+{
+	"title": "profile pic Schema",
+	"type": "object",
+	"properties": {
+		"name": {
+			"type": "string"
+		},
+		"type": {
+			"type": "string"
+		},
+		"data": {
+			"type": "string"
+		}
+	},
+    "required": ["name", "type", "data"]
+}
