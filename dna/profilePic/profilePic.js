@@ -16,13 +16,8 @@ var MAX_TYPE_LENGTH = 20;
  * @param      {string} payload.data - The imaage in Base64 encoding
  */
 function uploadProfilePic(payload) {
-
-  var picHash = commit('profilePic', payload);
-
-  // check if there is an existing entry and remove them if they exist
-  getLinks(App.Key.Hash, 'profilePic').forEach(function(link) {
-    remove(link.Hash);
-  });
+  // mark any existing pics as deleted
+  removeProfilePic()
 
   var picHash = commit('profilePic', payload);
 
@@ -43,12 +38,25 @@ function uploadProfilePic(payload) {
  */
 function getProfilePic(payload) {
   var agentKeyHash = typeof payload.agentKeyHash !== 'undefined' ? payload.agentKeyHash : App.Key.Hash;
-  var result = getLinks(agentKeyHash, 'profilePic', { Load: true });
-  if (result.length > 0) {
-    return result[0].Entry;
-  } else {
+  var result = getLinks(agentKeyHash, 'profilePic');
+
+  try {
+    return get(result[0].Hash);
+  } catch(e) {
     return "NoImageAvailable";
   }
+}
+
+
+/**
+ * Marks the calling agents profile pic as deleted
+ */
+function removeProfilePic() {
+  // check if there is an existing entry and remove them if they exist
+  getLinks(App.Key.Hash, 'profilePic').forEach(function(link) {
+    remove(link.Hash, "Entry Deleted");
+  });
+  return null;
 }
 
 

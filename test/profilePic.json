@@ -40,6 +40,22 @@
         "Input": {"name": "test", "type": "image/pngpngpngpngpngpng", "data": "12345"},
         "ErrMsg": "Validation Failed",
         "Exposure":"public"
+    },    
+
+    {
+        "Convey":"Can delete the added pic",
+        "Zome": "profilePic",
+        "FnName": "removeProfilePic",
+        "Input": {},
+        "Exposure":"public"
+    },
+    {
+        "Convey":"Deleted pic is no longer available",
+        "Zome": "profilePic",
+        "FnName": "getProfilePic",
+        "Input": {},
+        "Output": "NoImageAvailable",
+        "Exposure":"public"
     }
   ]
 }

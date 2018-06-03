@@ -225,6 +225,11 @@
           "Name": "getProfilePic",
           "CallingType": "json",
           "Exposure": "public"
+        },
+        {
+          "Name": "removeProfilePic",
+          "CallingType": "json",
+          "Exposure": "public"
         }
       ]
     }
