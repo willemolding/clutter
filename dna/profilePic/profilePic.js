@@ -1,4 +1,8 @@
 
+var MAX_IMAGE_SIZE_BYTES = 5242880; //5MB
+var MAX_NAME_LENGTH = 50;
+var MAX_TYPE_LENGTH = 20;
+
 /*=============================================
 =            Public Zome Functions            =
 =============================================*/
@@ -15,10 +19,19 @@ function uploadProfilePic(payload) {
 
   var picHash = commit('profilePic', payload);
 
-  // link it to the agents public key hash
-  commit('profilePicLink', {
-    Links: [{ Base: App.Key.Hash, Link: picHash, Tag: 'profilePic' }]
+  // check if there is an existing entry and remove them if they exist
+  getLinks(App.Key.Hash, 'profilePic').forEach(function(link) {
+    remove(link.Hash);
   });
+
+  var picHash = commit('profilePic', payload);
+
+  // add link to key hash
+  commit('profilePicLinks', {
+    Links: [{Base: App.Key.Hash, Link: picHash, Tag: 'profilePic'}]
+  });
+
+  return picHash;
 }
 
 
@@ -41,6 +54,33 @@ function getProfilePic(payload) {
 
 /*=====  End of Public Zome Functions  ======*/
 
+function getFileSizeBytes(data) {
+  // In Base64 each char represents 6 bits so the number of bytes is the length * (3/4)
+  //exclude the prefix
+  var imageData = data.substring(data.indexOf(',')+1, data.length);
+  return imageData.length * 3 / 4;
+}
+
+function validateProfilePic(profilePicEntry) {
+  return (getFileSizeBytes(profilePicEntry.data) <= MAX_IMAGE_SIZE_BYTES) &&
+    (profilePicEntry.name.length < MAX_NAME_LENGTH) &&
+    (profilePicEntry.type.length < MAX_TYPE_LENGTH);
+}
+
+function getCreator (hash) {
+  return get(hash, { GetMask: HC.GetMask.Sources })[0];
+}
+
+function validate(entry_type, entry, header, pkg, sources) {
+  switch(entry_type) {
+    case 'profilePic':
+      return validateProfilePic(entry);
+    case 'profilePicLinks':
+      return true;
+    default:
+      return false;
+  }
+}
 
 /*============================================
 =            Validation Functions            =
@@ -51,23 +91,27 @@ function genesis() {
 }
 
 function validateCommit(entry_type, entry, header, pkg, sources) {
-  return true;
+  return validate(entry_type, entry, header, pkg, sources);
 }
 
 function validatePut(entry_type, entry, header, pkg, sources) {
-  return true;
+  return validate(entry_type, entry, header, pkg, sources);
 }
 
 function validateLink(linkEntryType, baseHash, links, pkg, sources) {
-  return true;
+  return (linkEntryType === 'profilePicLinks') &&
+  // an agent can only modify links on their own key hash
+    sources[0] === baseHash;
 }
 
 function validateMod(entry_type, entry, header, replaces, pkg, sources) {
-  return true;
+  // no modifications
+  return false;
 }
 
 function validateDel(entry_type, hash, pkg, sources) {
-  return true;
+  // no deletions
+  return false;
 }
 
 function validatePutPkg(entry_type) {

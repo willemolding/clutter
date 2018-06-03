@@ -29,8 +29,16 @@
         "Convey":"A name that is too long will not be allowed to commit",
         "Zome": "profilePic",
         "FnName": "uploadProfilePic",
-        "Input": {"name": "testtesttesttesttesttesttesttesttesttest", "type": "image/png", "data": "12345"},
-        "Output": "fail",
+        "Input": {"name": "testtesttesttesttesttesttesttesttesttesttesttesttesttesttest", "type": "image/png", "data": "12345"},
+        "ErrMsg": "Validation Failed",
+        "Exposure":"public"
+    },
+    {
+        "Convey":"A type that is too long will not be allowed to commit",
+        "Zome": "profilePic",
+        "FnName": "uploadProfilePic",
+        "Input": {"name": "test", "type": "image/pngpngpngpngpngpng", "data": "12345"},
+        "ErrMsg": "Validation Failed",
         "Exposure":"public"
     }
   ]
