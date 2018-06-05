@@ -13,7 +13,7 @@ var MAX_TYPE_LENGTH = 20;
  * @param      {Object}  payload
  * @param      {string} payload.name - The file name of the image
  * @param      {string} payload.type - The file MIME type
- * @param      {string} payload.data - The imaage in Base64 encoding
+ * @param      {string} payload.data - The image in Base64 encoding
  */
 function uploadProfilePic(payload) {
   // mark any existing pics as deleted

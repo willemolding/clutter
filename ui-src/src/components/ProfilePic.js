@@ -8,12 +8,12 @@ class ProfilePic extends Component {
 
 	render() {
 		return (
-            <div className="prof-pic">
-              <img 
-              src={this.props.src}
-              onClick={this.onClick}
-              />
-            </div>
+      <div className="prof-pic">
+        <img 
+        src={this.props.src}
+        onClick={this.onClick}
+        />
+      </div>
 		);
 	}
 }
