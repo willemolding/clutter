@@ -25,6 +25,7 @@ class Meow extends Component {
     })
   }
 
+<<<<<<< HEAD
   //identify all hashtags and replace with links
   hashify = text => {
     const message = text
@@ -41,12 +42,30 @@ class Meow extends Component {
       }
     })
   }
+=======
+  // replace hashtags with links
+  hashtagify = text => {
+    const hashtagRegex = /\B(#)(\w*[a-zA-Z]+\w*)/g
+    return text.replace(hashtagRegex, '<Link to="/tag/$2" className="hashtag">$&</Link>')
+  }
+
+>>>>>>> 0de45aa3a0c8c72b5b24bc42c6a2706d9f623343
 
   render() {
     if (!this.props.post) {
       return null
     }
+<<<<<<< HEAD
     const { stamp, message, author, hash, userHandle } = this.props.post
+=======
+
+    const { stamp, message, author, hash, userHandle } = this.props.post;
+
+    let formattedMessage = message
+    formattedMessage = this.urlify(message)
+    formattedMessage = this.hashtagify(message)
+    
+>>>>>>> 0de45aa3a0c8c72b5b24bc42c6a2706d9f623343
     return (
       <div className="meow" id={stamp}>
         <a className="meow-edit" onClick={() => "openEditPost('+id+')"}>
@@ -59,7 +78,13 @@ class Meow extends Component {
         <Link to={`/meow/${hash}`} className="stamp">
           {new Date(stamp).toString()}
         </Link>
+<<<<<<< HEAD
         <div className="message">{this.urlify(message)}</div>
+=======
+        <div className="message">
+          <div dangerouslySetInnerHTML={{ __html: message }} />
+        </div>
+>>>>>>> 0de45aa3a0c8c72b5b24bc42c6a2706d9f623343
       </div>
     )
   }

@@ -72,6 +72,7 @@ class App extends Component {
                   <Route path="/editProfile" component={EditProfileContainer} />
                   <Route path="/follow" component={FollowContainer} />
                   <Route path="/meow/:meowHash" component={MeowContainer} />
+<<<<<<< HEAD
                   <Route
                     path="/tag/:hashtag"
                     component={HashtagFeedContainer}
@@ -79,6 +80,13 @@ class App extends Component {
                 </div>
               </div>
             </div>
+=======
+                  <Route path="/tag/:hashtag" component={HashtagFeedContainer} />
+                </div>
+              </div>
+            </div>
+
+>>>>>>> 0de45aa3a0c8c72b5b24bc42c6a2706d9f623343
             <div className="col-sm-3">
               <div className="alphabox">
                 <div id="about">
